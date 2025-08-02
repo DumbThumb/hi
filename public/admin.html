@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Clip Rank Admin</title>
+</head>
+<body>
+  <h1>Update Clip Rank</h1>
+  <form id="rankForm">
+    <label>Clip ID <input type="number" id="clipId" required></label>
+    <label>Rank <input type="number" id="rank" required></label>
+    <button type="submit">Update</button>
+  </form>
+  <pre id="result"></pre>
+  <script>
+    document.getElementById('rankForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('clipId').value;
+      const rank = Number(document.getElementById('rank').value);
+      const res = await fetch(`/clips/${id}/rank`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rank })
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
